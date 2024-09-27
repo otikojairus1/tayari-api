@@ -173,4 +173,9 @@ class UserController extends Controller
         );
         return response()->json(['success' => true, 'data' => $score]);        
     }
+
+    public function fetch_scores(Request $request, $id){
+        $scores = Score::where('kid_id', $id)->with('kid')->get();
+        return response()->json(['success' => true, 'data' => $scores]);      
+    }
 }

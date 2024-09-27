@@ -16,3 +16,4 @@ Route::put('/modify/kids/{id}', [UserController::class, 'update_kids']);
 Route::get('/get/kids/{id}', [UserController::class, 'get_kids']);
 Route::put('/modify/parents/{id}', [UserController::class, 'modify_parents']);
 Route::post('/add-kid-homework-progress', [UserController::class, 'add_kid_homework_progress']);
+Route::get('/get-scores/{id}', [UserController::class, 'fetch_scores']);
