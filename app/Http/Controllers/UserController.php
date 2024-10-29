@@ -67,6 +67,38 @@ class UserController extends Controller
 
     }
 
+    
+
+       public function register_admin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . ParentModel::class],
+            'password' => ['required'],
+            // 'account_type'=>['required'],
+            'phone' => ['required'],
+            'otp' => ['required'],
+            'country' => ['required'],
+        ]);
+        if ($validator->fails()) {
+            $response = $validator->errors();
+            return response()->json(['success' => false, 'data' => $response]);
+        }
+
+        $user = ParentModel::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone' => $request->phone,
+            'account_type' => 'ADMIN',
+            'otp' => mt_rand(1000, 9999),
+            'email' => $request->email,
+            'country' => $request->country,
+            'password' => Hash::make($request->string('password')),
+        ]);
+        Mail::to($user->email)->send(new SendOtpMail($user));
+        return response()->json(['success' => true, 'data' => $user]);
+    }
+
     public function register_teacher(Request $request){
         $validator = Validator::make($request->all(), [
             'first_name' => ['required', 'string', 'max:255'],
