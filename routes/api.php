@@ -9,6 +9,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::post('/register', [UserController::class, 'register']);
+Route::post('/register-teacher', [UserController::class, 'register_teacher']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/verify', [UserController::class, 'verify']);
 Route::post('/add/kids', [UserController::class, 'add_kids']);
