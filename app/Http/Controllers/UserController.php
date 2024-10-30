@@ -99,6 +99,12 @@ class UserController extends Controller
         return response()->json(['success' => true, 'data' => $user]);
     }
 
+
+    public function get_all_system_users(){
+        return response()->json(['success' => true, 'data' => ParentModel::where('account_type' ,'!=', null)->get()]);
+        
+    }
+
     public function register_teacher(Request $request){
         $validator = Validator::make($request->all(), [
             'first_name' => ['required', 'string', 'max:255'],
@@ -205,6 +211,14 @@ class UserController extends Controller
     public function get_kids(Request $request, $id)
     {
         $kid = Kid::where('parent_id', $id)->get();
+        return response()->json(['success' => true, 'data' => $kid]);
+
+    }
+
+
+    public function get_all_kids()
+    {
+        $kid = Kid::all();
         return response()->json(['success' => true, 'data' => $kid]);
 
     }
