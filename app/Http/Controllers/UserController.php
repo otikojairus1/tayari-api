@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendBroadcastEmail;
 use App\Mail\SendOtpMail;
 use App\Models\Kid;
 use App\Models\ParentModel;
 use App\Models\Score;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,6 +23,7 @@ class UserController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . ParentModel::class],
             'password' => ['required'],
+            'account_type' => [''],
             'phone' => ['required'],
             'otp' => ['required'],
             'country' => ['required'],
@@ -34,6 +37,7 @@ class UserController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'phone' => $request->phone,
+            'account_type'=>$request->account_type ? $request->account_type : null,
             'otp' => mt_rand(1000, 9999),
             'email' => $request->email,
             'country' => $request->country,
@@ -41,6 +45,33 @@ class UserController extends Controller
         ]);
         Mail::to($user->email)->send(new SendOtpMail($user));
         return response()->json(['success' => true, 'data' => $user]);
+    }
+    public function broadcast_email(Request $request){
+            $users = ParentModel::all();     
+
+        foreach($users as $user){
+            $details = [
+                'user'=>$user,
+                'subject'=>$request->subject,
+                'content'=>$request->content
+            ];
+            Mail::to($user->email)->send(new SendBroadcastEmail($details));
+        }
+         return response()->json(['success' => true, 'data' => $users]);
+
+
+    }
+    public function update_user(Request $request){
+         $user = ParentModel::where('id', $request->id)->first();
+        if ($user) {
+            $data = $request->all();            
+            if (isset($data['password'])) {
+                $data['password'] = bcrypt($data['password']);
+            }
+            $user->update($data);
+        }
+        return response()->json(['success' => true, 'data' => $user]);
+
     }
     public function login(Request $request)
     {

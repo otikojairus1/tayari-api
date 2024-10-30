@@ -21,3 +21,5 @@ Route::post('/add-kid-homework-progress', [UserController::class, 'add_kid_homew
 Route::get('/get-scores/{id}', [UserController::class, 'fetch_scores']);
 Route::get('/get-all-kids', [UserController::class, 'get_all_kids']);
 Route::get('/get-all-users', [UserController::class, 'get_all_system_users']);
+Route::put('/update-user-details', [UserController::class, 'update_user']);
+Route::post('/broadcast-email', [UserController::class, 'broadcast_email']);
