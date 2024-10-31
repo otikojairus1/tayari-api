@@ -202,7 +202,17 @@ class UserController extends Controller
     public function update_kids(Request $request, $id)
     {
         $kid = Kid::find($id);
-        $kid->update($request->all());
+        // $kid->update($request->all());
+
+        // Check if 'streaks' is in the request
+        if ($request->has('streaks')) {
+            // Add the request streaks to the current streaks
+            $kid->streaks += $request->input('streaks');
+        }
+
+        // Update the other attributes
+        $kid->update($request->except('streaks'));
+
         return response()->json(['success' => true, 'data' => $kid]);
 
     }

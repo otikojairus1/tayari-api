@@ -30,7 +30,7 @@ class SendBroadcastEmail extends Mailable
     {
         return new Envelope(            
             from: new Address('admin@tayari.live', 'TAYARI.LIVE'),
-            subject: '[TAYARI.LIVE]: A Message From The Admin',
+            subject: '[TAYARI.LIVE]:'.$this->details['subject'],
         );
     }
 
