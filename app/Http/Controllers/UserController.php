@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ScoreNotice;
 use App\Mail\SendBroadcastEmail;
 use App\Mail\SendOtpMail;
 use App\Models\Kid;
@@ -288,11 +289,15 @@ class UserController extends Controller
                 'homework_score' => $request->homework_score,
             ]
         );
+        // send notice
+        $kid = Kid::where('id', $request->kid_id)->first();
+        $parent = ParentModel::where('id', $kid->id)->first();
+        Mail::to($parent->email)->send(new ScoreNotice($kid));
         return response()->json(['success' => true, 'data' => $score]);        
     }
 
     public function fetch_scores(Request $request, $id){
         $scores = Score::where('kid_id', $id)->with('kid')->get();
-        return response()->json(['success' => true, 'data' => $scores]);      
+        return response()->json(['success' => true, 'data' => $scores]);
     }
 }
