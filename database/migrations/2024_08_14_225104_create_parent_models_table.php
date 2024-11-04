@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('phone');
             $table->string('email');
+            $table->string('account_type')->nullable();
             $table->string('password');
             $table->string('otp')->nullable();
             $table->string('country');
