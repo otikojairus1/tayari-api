@@ -266,6 +266,16 @@ class UserController extends Controller
     }
 
 
+    public function get_all_kids_by_parent($id)
+    {
+        $kid = Kid::where('parent_id', $id)->get();
+        return response()->json(['success' => true, 'data' => $kid]);
+
+    }
+
+    
+
+
     public function add_kid_homework_progress(Request $request){
         $validator = Validator::make($request->all(), [
             'kid_id' => ['required'],

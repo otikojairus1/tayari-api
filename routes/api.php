@@ -19,6 +19,7 @@ Route::get('/get/kids/{id}', [UserController::class, 'get_kids']);
 Route::put('/modify/parents/{id}', [UserController::class, 'modify_parents']);
 Route::post('/add-kid-homework-progress', [UserController::class, 'add_kid_homework_progress']);
 Route::get('/get-scores/{id}', [UserController::class, 'fetch_scores']);
+Route::get('/get-all-kids/{id}', [UserController::class, 'get_all_kids_by_parent']);
 Route::get('/get-all-kids', [UserController::class, 'get_all_kids']);
 Route::get('/get-all-users', [UserController::class, 'get_all_system_users']);
 Route::put('/update-user-details', [UserController::class, 'update_user']);
