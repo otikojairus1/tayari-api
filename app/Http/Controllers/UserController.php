@@ -133,7 +133,7 @@ class UserController extends Controller
 
 
     public function get_all_system_users(){
-        return response()->json(['success' => true, 'data' => ParentModel::where('account_type' ,'!=', null)->get()]);
+        return response()->json(['success' => true, 'data' => ParentModel::all()]);
         
     }
 
