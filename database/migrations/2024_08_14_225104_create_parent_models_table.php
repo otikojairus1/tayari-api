@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('account_type')->nullable();
             $table->string('password');
             $table->string('otp')->nullable();
+            $table->string('is_premium')->nullable()->default(false);
             $table->string('country');
             $table->timestamps();
         });

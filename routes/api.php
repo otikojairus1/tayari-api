@@ -9,6 +9,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::post('/register', [UserController::class, 'register']);
+Route::get('/get-subscription/{id}', [UserController::class, 'subdetails']);
 Route::post('/register-teacher', [UserController::class, 'register_teacher']);
 Route::post('/register-admin', [UserController::class, 'register_admin']);
 Route::post('/login', [UserController::class, 'login']);

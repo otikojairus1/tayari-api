@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+
+    public function subdetails($id){
+        $user = ParentModel::where('id', $id)->first()->is_premium;
+        return response()->json(['success' => true, 'data' => $user]);
+
+    }
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
